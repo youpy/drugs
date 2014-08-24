@@ -60,6 +60,10 @@ __END__
             %label{for:"xpath"} XPath
             %input.form-control{type:"text",name:"xpath",placeholder:"Enter XPath"}
           %input.btn.btn-default{type:"submit",value:"Submit"}
+    %div.container
+      %p
+        based on
+        %a{href:'http://drugs.herokuapp.com/'} 医薬品一覧 - Wikipedia のマルコフ連鎖
 
 @@ /digest/
 !!! 5
