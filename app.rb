@@ -12,19 +12,19 @@ post '/' do
   xpath = params[:xpath]
 
   mc = MarkovChain.create_from_url_and_xpath(url, xpath)
-  redirect '/%s/' % mc.id
+  redirect '/%s/' % mc.id_str
 end
 
-get '/:id/' do
-  @mc = MarkovChain.find(params[:id])
+get '/:id_str/' do
+  @mc = MarkovChain.where(id_str: params[:id_str]).first
   @text = @mc.generate
 
-  haml :'/id/'
+  haml :'/id_str/'
 end
 
-get '/:id/json' do
+get '/:id_str/json' do
   content_type 'text/json'
-  JSON.pretty_generate(result: mc(params[:id]))
+  JSON.pretty_generate(result: MarkovChain.where(id_str: params[:id_str]).first.generate)
 end
 
 __END__
@@ -53,7 +53,7 @@ __END__
         based on
         %a{href:'http://drugs.herokuapp.com/'} 医薬品一覧 - Wikipedia のマルコフ連鎖
 
-@@ /id/
+@@ /id_str/
 !!! 5
 %html
   %head
