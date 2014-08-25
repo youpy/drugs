@@ -35,7 +35,7 @@ class MarkovChain
     doc = Nokogiri::HTML(open(url))
     title = doc.xpath('//title')[0].text
     chains = Hash.new {|h, k| h[k] = Array.new }
-    originals = doc.css(xpath).map {|a| a.text }
+    originals = doc.xpath(xpath).map {|a| a.text }
     originals.each do |original|
       ['', 'BOD', original.split(//), 'EOD', ''].flatten.each_cons(3) do |first, second, third|
         chains[first + second] << third #unless chains[first + second].include?(third)
