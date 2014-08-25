@@ -2,6 +2,7 @@ require 'open-uri'
 require 'uri'
 require 'digest/md5'
 require 'mongoid'
+require 'nokogiri'
 
 if mongo_uri = ENV['MONGOHQ_URL']
   Mongoid.database = Mongo::Connection.from_uri(mongo_uri).
