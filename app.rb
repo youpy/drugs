@@ -17,6 +17,7 @@ end
 
 get '/:id_str/' do
   @mc = MarkovChain.where(id_str: params[:id_str]).first
+  p @mc
   @text = @mc.generate
 
   haml :'/id_str/'

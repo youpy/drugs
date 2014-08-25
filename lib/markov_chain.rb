@@ -18,7 +18,7 @@ class MarkovChain
   include Mongoid::Timestamps
 
   field :id_str, :type => String
-  field :chains, :type => Hash
+  field :chains, :type => String
   field :originals, :type => Array
   field :title, :type => String
   field :url, :type => String
@@ -45,7 +45,10 @@ class MarkovChain
     instance = find_or_create_by(id_str: id_str)
     instance.url = url
     instance.xpath = xpath
-    instance.chains = chains
+
+    # http://stackoverflow.com/questions/9759972/what-characters-are-not-allowed-in-mongodb-field-names
+    instance.chains = JSON.generate(chains)
+
     instance.originals = originals
     instance.title = title
     instance.save!
@@ -54,6 +57,7 @@ class MarkovChain
 
   def generate
     begin
+      chains = JSON.parse(self.chains)
       chars = []
       char = 'BOD'
       until char =~ /EOD/
