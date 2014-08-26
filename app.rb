@@ -24,6 +24,7 @@ end
 
 get '/:id_str/json' do
   content_type 'text/json'
+  headers 'Access-Control-Allow-Origin' => '*'
   JSON.pretty_generate(result: MarkovChain.where(id_str: params[:id_str]).first.generate)
 end
 
