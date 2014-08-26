@@ -17,7 +17,6 @@ end
 
 get '/:id_str/' do
   @mc = MarkovChain.where(id_str: params[:id_str]).first
-  p @mc
   @text = @mc.generate
 
   haml :'/id_str/'
@@ -62,16 +61,28 @@ __END__
     %link{rel:'stylesheet',href:'../bootstrap.min.css'}
     :css
       .jumbotron { background-color: white }
-      * { color: red }
   %body
     %div.jumbotron
-      %a{href: @mc.url}= @mc.title
-      のマルコフ連鎖
-      (
-      %a{href: "./json"} JSON
-      )
-      %a.twitter-share-button.pull-right{"href"=>"https://twitter.com/share"} Tweet
-      %hr
-      %h1.text-center= @text
+      %div.container
+        %a{href: @mc.url}= @mc.title
+        のマルコフ連鎖
+        (
+        %a{href: "./json"} JSON
+        )
+        %a.twitter-share-button.pull-right{"href"=>"https://twitter.com/share"} Tweet
+        %hr
+        %h1.text-center= @text
+    %div.container
+      %form{action:'/',method:'post'}
+        %p.text-right
+          %small
+            最終更新日時:
+            = @mc.updated_at
+            (
+            = @mc.xpath
+            )
+          %input{type:'hidden',name:'xpath',value:@mc.xpath}
+          %input{type:'hidden',name:'url',value:@mc.url}
+          %input.btn.btn-link.btn-sm{type:'submit',value:'データ更新'}
       :javascript
         !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
