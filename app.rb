@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 require 'sinatra'
 require 'haml'
+require 'deep_merge'
 require './lib/markov_chain.rb'
 require './lib/text_generator.rb'
 
@@ -34,7 +35,7 @@ get '/:id_str_a/:id_str_b/?:format?' do
   @a = MarkovChain.where(id_str: params[:id_str_a]).first
   @b = MarkovChain.where(id_str: params[:id_str_b]).first
   @text = TextGenerator.new(
-    @a.parsed_chains.merge(@b.parsed_chains),
+    @a.parsed_chains.deep_merge(@b.parsed_chains),
     @a.originals + @b.originals
   ).generate
 
