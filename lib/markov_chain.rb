@@ -55,23 +55,7 @@ class MarkovChain
     instance
   end
 
-  def generate
-    begin
-      chains = JSON.parse(self.chains)
-      chars = []
-      char = 'BOD'
-      until char =~ /EOD/
-        if char == 'BOD'
-          char = char + chains[char].sample
-        else
-          char = char[-1] + chains[char].sample
-        end
-
-        chars << char[-1]
-      end
-      result = chars[0..-2].join
-    end while originals.include?(result)
-
-    result
+  def parsed_chains
+    JSON.parse(chains)
   end
 end
