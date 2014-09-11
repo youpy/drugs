@@ -100,9 +100,9 @@ __END__
           %a{href: "./json"} JSON
           )
         - else
-          %a{href: @a.url}= @a.title
+          %a{href: '/%s/' % @a.id_str }= @a.title
           +
-          %a{href: @b.url}= @b.title
+          %a{href: '/%s/' % @b.id_str }= @b.title
           のマルコフ連鎖
           (
           %a{href: "./json"} JSON
